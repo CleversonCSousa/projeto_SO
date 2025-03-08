@@ -1,0 +1,6 @@
+.main-content {
+    padding-top: 60px; /* Ajuste conforme a altura da navbar */
+    padding-bottom: 60px; /* Ajuste conforme a altura do footer */
+    overflow-y: auto; /* Permite a rolagem do conteúdo */
+    flex: 1; /* Faz o conteúdo ocupar o espaço restante entre a navbar e o footer */
+}
