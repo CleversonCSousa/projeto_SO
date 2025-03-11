@@ -9,6 +9,7 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
+        <Route index element={<App />} />
         <Route path="home" element={<App />} />
         <Route path="syscall" element={<Syscall/>} />
         <Route path="memo" element={<Memo/>} />

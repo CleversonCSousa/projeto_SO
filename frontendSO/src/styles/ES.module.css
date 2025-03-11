@@ -1,8 +1,8 @@
 .container {
   display: flex;
-  flex-direction: column; /* Alinha os itens na vertical */
-  justify-content: center; /* Alinha os itens no centro verticalmente */
-  align-items: center; /* Alinha os itens no centro horizontalmente */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
   background: linear-gradient(135deg, #1e3c72, #2a5298);
   color: white;

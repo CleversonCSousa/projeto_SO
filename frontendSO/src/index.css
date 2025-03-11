@@ -7,5 +7,6 @@ body, html {
     margin: 0;
     padding: 0;
     background: transparent;
-    overflow-x: hidden; /* Bloqueia apenas a rolagem horizontal */
+    overflow-x: hidden; 
+    
 }
