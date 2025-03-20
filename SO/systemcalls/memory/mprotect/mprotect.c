@@ -1,42 +1,47 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#include <sys/wait.h>
 #include <sys/mman.h>
 #include <stdio.h>
+#include <signal.h>
 
-int count = 0;
+void sigsegv_handler(int sig) {
+    printf("Não pode escrever na memória...\n");
+    exit(0); 
+}
 
-int main(){
-    int size = 10;    
-    /* ptr armazena o endereço onde começa a região que foi mapeada, também utiliza flags para gerenciar as permissões como PROT_READ e PROT_WRITE para permitir
-    leitura e escrita MAP_SHARED para permitir com que as alterações na memória sejam compartilhadas para outros processos e MAP_ANON para dizer que é uma memória
-    anônima (não está associada a nenhum arquivo)
-    */
+int main() {
+    // Registra o handler para o sinal SIGSEGV (Segmentation Fault) para continuar a execução do programa, mesmo após o segmentation fault
+    signal(SIGSEGV, sigsegv_handler);
+    int size = 10;
+
+    // Mapeia uma região de memória anônima compartilhada
     int *ptr = (int*) mmap(NULL, size * sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANON, -1, 0);
 
-    // Preechendo a memória alocada
-
-    for(int i = 0; i < size; i++){
-        ptr[i] = i + 1;
-    }
-
+    // Verifica se o mapeamento de memória falhou
     if (ptr == MAP_FAILED) {
-        printf("mmap failed");
+        perror("Falha ao mapear memória");
         return 1;
     }
 
-    printf("Andress: %p\n", ptr);
-
-    // Desabilitando a escrita na memória e deixando somente para leitura
-    if (mprotect(ptr, size * sizeof(int), PROT_READ) == -1) {
-        perror("Erro no mprotect");
-        return 1;
-    }
-
-    // Tentando escrever na memória (Vai gerar um erro caso a desabilitação da escrita na memória tenha ocorrido com sucesso)
-    for(int i = size; i >= 0; i--){
+    // Preenche a memória alocada com valores de 1 a 10
+    for (int i = 0; i < size; i++) {
         ptr[i] = i + 1;
+    }
+
+    // Exibe o endereço da memória mapeada
+    printf("Endereço da memória mapeada: %p\n", ptr);
+
+    // Desabilita a escrita na memória e permite somente leitura
+    if (mprotect(ptr, size * sizeof(int), PROT_READ) == -1) {
+        perror("Erro ao modificar permissões de memória com mprotect");
+        return 1;
+    }
+    // Tentativa de escrever na memória (isso deverá falhar, já que a escrita foi desabilitada)
+    for (int i = 0; i < size; i++) {
+        // A tentativa de escrever na memória protegida irá falhar
+        // Normalmente, isso resultaria em um Segmentation Fault ou erro de proteção
+        ptr[i] = i + 1;  // Espera-se que isso falhe devido à permissão de leitura apenas
     }
 
     return 0;

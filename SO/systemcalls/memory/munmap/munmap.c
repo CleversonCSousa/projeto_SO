@@ -5,7 +5,6 @@
 #include <sys/mman.h>
 #include <stdio.h>
 
-int count = 0;
 
 int main(){
     int size = 10;    

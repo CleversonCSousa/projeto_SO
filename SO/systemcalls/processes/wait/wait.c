@@ -11,7 +11,7 @@ int main(){
     pid = fork();
     if(pid == 0){
         printf("Waiting...\n");
-        sleep(3);
+        sleep(1);
         printf("I am children process\n");
     } else if(pid > 0) {
         wait(NULL);

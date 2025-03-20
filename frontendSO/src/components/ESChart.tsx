@@ -4,6 +4,8 @@ import styles from "../styles/Charts.module.css";
 
 const ESChartComponente: React.FC = () => {
   const [data, setData] = useState<Record<string, number> | null>(null);
+  const [sourceCode, setSourceCode] = useState<string | null>(null);
+  const [straceData, setStraceData] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const formatNumber = (num: number) => {
@@ -13,49 +15,39 @@ const ESChartComponente: React.FC = () => {
     return num.toString();
   };
 
-  const fetchData = async () => {
-    setLoading(true); // Show loading state
+  const fetchData = async (endpoint: string) => {
+    setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/data");
+      const response = await axios.get(`http://localhost:5000/systemcalls/io_files/${endpoint}`);
       console.log("Dados recebidos:", response.data);
 
-      const dataObject = Array.isArray(response.data) ? response.data[0] : response.data;
-      setData(dataObject);
+      setData(response.data.timeData);
+      setSourceCode(response.data.sourceCode);
+      setStraceData(response.data.straceData);
     } catch (error) {
       console.error("Erro ao buscar os dados:", error);
     } finally {
-      setLoading(false); // Hide loading state
+      setLoading(false);
     }
   };
 
-  const renderTable = (entries: [string, number][]) => (
-    <table className={styles.table}>
-      <thead>
-        <tr>
-          <th>Processo</th>
-          <th>Valor</th>
-        </tr>
-      </thead>
-      <tbody>
-        {entries.map(([key, value]) => (
-          <tr key={key}>
-            <td>{key}</td>
-            <td>{formatNumber(value)}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-
   return (
     <div className={styles.chartContainer}>
-      <button className={styles.button} onClick={fetchData} disabled={loading}>
-        {loading ? "Carregando..." : "Realizar Processos"}
+      <button className={styles.button} onClick={() => fetchData("open")} disabled={loading}>
+        {loading ? "Carregando..." : "Realizar Processo Open"}
       </button>
+      <button className={styles.button} onClick={() => fetchData("stat")} disabled={loading}>
+        {loading ? "Carregando..." : "Realizar Processo Stat"}
+      </button>
+      <button className={styles.button} onClick={() => fetchData("write")} disabled={loading}>
+        {loading ? "Carregando..." : "Realizar Processo Write"}
+      </button>
+
       {data && (
         <div className={styles.tablesContainer}>
           <table className={styles.table}>
             <thead>
+              <caption>Time Data</caption>
               <tr>
                 <th>Processo</th>
                 <th>Valor</th>
@@ -70,24 +62,38 @@ const ESChartComponente: React.FC = () => {
                 const firstHalf = entries.slice(0, meio);
                 const secondHalf = entries.slice(meio);
 
-                const maxLength = Math.max(firstHalf.length, secondHalf.length);
-                const rows = [];
-                for (let i = 0; i < maxLength; i++) {
-                  rows.push(
-                    <tr key={i}>
-                      <td>{firstHalf[i]?.[0]}</td>
-                      <td>{firstHalf[i] ? formatNumber(firstHalf[i][1]) : ""}</td>
-                      <td>{secondHalf[i]?.[0]}</td>
-                      <td>{secondHalf[i] ? formatNumber(secondHalf[i][1]) : ""}</td>
-                    </tr>
-                  );
-                }
-                return rows;
+                return firstHalf.map(([key1, value1], index) => (
+                  <tr key={index}>
+                    <td>{key1}</td>
+                    <td>{formatNumber(value1)}</td>
+                    <td>{secondHalf[index]?.[0] || ""}</td>
+                    <td>{secondHalf[index] ? formatNumber(secondHalf[index][1]) : ""}</td>
+                  </tr>
+                ));
               })()}
             </tbody>
           </table>
         </div>
       )}
+
+      <div className={styles.codes}>
+        {sourceCode && (
+          <div className={styles.codeContainer}>
+            <h3>Source Code</h3>
+            <pre className={styles.codeBlock}>
+              <code>{sourceCode}</code>
+            </pre>
+          </div>
+        )}
+        {straceData && (
+          <div className={styles.straceContainer}>
+            <h3>Strace Data</h3>
+            <pre className={styles.codeBlock}>
+              <code>{straceData}</code>
+            </pre>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

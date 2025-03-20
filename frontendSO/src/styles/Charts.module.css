@@ -65,3 +65,38 @@
 .button:hover {
     background: #556f9f; /* Cor de fundo mais escura quando passar o mouse */
 }
+.codeContainer, .straceContainer {
+    width: 80%;
+    max-width: 900px;
+    background: rgba(0, 0, 0, 0.267);
+    background-color: c0d6ff;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: left;
+}
+
+.codeContainer h3, .straceContainer h3 {
+    font-size: 1.4rem;
+    color: #ffd700;
+    margin-bottom: 10px;
+}
+
+.codeBlock {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    font-family: "Courier New", monospace;
+    font-size: 1rem;
+    color: #ffd700;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    
+}
+
+.codes{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}

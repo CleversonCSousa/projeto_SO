@@ -3,18 +3,22 @@
 #include <sys/types.h>
 #include <stdio.h>
 
-int count = 0;
-
-int main(){
+int main() {
     pid_t pid;
+    
+    // Cria um novo processo
     pid = fork();
-    if(pid == 0){
-        count = 1;
-        printf("I am children process with pid = %d\n", getpid());
-        printf("Value count: %d\n", count);
-    } else if(pid > 0) {
+
+    if (pid == 0) {  // Processo filho
+        printf("I am child process with pid = %d\n", getpid());
+        printf("Child process finishing\n");
+    } else if (pid > 0) {  // Processo pai
         printf("I am parent process with pid = %d\n", getpid());
-        printf("Value count: %d\n", count);
+        printf("Parent process finishing\n");
+    } else {
+        perror("fork failed");
+        return 1;
     }
+
     return 0;
 }

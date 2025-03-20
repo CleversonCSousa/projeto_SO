@@ -3,10 +3,9 @@
 #include <sys/types.h>
 #include <stdio.h>
 
-int count = 0;
-
 int main(){
     pid_t pid;
+    int count;
     pid = fork();
     if(pid == 0){
         count = 1;
