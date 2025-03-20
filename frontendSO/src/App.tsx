@@ -7,7 +7,7 @@ const App = () => {
         <h1>Simulador de Processos Primitivos</h1>
         <h2>Simulador desenvolvido para a disciplina de Sistemas Operacionais I</h2>
         <h3 className={styles.text}>Docentes: Júlio Cezar Estrella e Sarita Mazzini Bruschi</h3>
-        <h3 className={styles.text}>Alunos: ------ </h3>
+        <h3 className={styles.text}>Alunos: Cleverson, Felipe, Yuri </h3>
       </div>
     </div>
   );
