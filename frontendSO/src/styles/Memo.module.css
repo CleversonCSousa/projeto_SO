@@ -1,9 +1,58 @@
 .container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 100vh;
+    height: calc(100vh - 60px - 20px); 
+    margin-top: 60px; 
     background: linear-gradient(135deg, #1e3c72, #2a5298);
     color: white;
     text-align: center;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+
+.memoContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 80%;
+    max-width: 900px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+.memoList, .memoDescription {
+    flex: 1;
+    padding: 10px;
+}
+
+.memoList h2, .memoDescription h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 10px 0;
+    font-size: 1.2rem;
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.memoDescription p {
+    font-size: 1.1rem;
+    margin: 8px 0;
+    text-align: start;
+}
+
+.memoDescription strong {
+    color: #ffd700;
 }
