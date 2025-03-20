@@ -15,57 +15,10 @@ const SyscallChartComponent: React.FC = () => {
     return num.toString();
   };
 
-  const fetchDataFork = async () => {
+  const fetchData = async (endpoint: string) => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/systemcalls/processes/fork");
-      console.log("Dados recebidos:", response.data);
-
-      setData(response.data.timeData);
-      setSourceCode(response.data.sourceCode);
-      setStraceData(response.data.straceData);
-    } catch (error) {
-      console.error("Erro ao buscar os dados:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchDataGetpid = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get("http://localhost:5000/systemcalls/processes/getpid");
-      console.log("Dados recebidos:", response.data);
-
-      setData(response.data.timeData);
-      setSourceCode(response.data.sourceCode);
-      setStraceData(response.data.straceData);
-    } catch (error) {
-      console.error("Erro ao buscar os dados:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  const fetchDataGetppid = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get("http://localhost:5000/systemcalls/processes/getppid");
-      console.log("Dados recebidos:", response.data);
-
-      setData(response.data.timeData);
-      setSourceCode(response.data.sourceCode);
-      setStraceData(response.data.straceData);
-    } catch (error) {
-      console.error("Erro ao buscar os dados:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchDataWait = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get("http://localhost:5000/systemcalls/processes/wait");
+      const response = await axios.get(`http://localhost:5000/systemcalls/processes/${endpoint}`);
       console.log("Dados recebidos:", response.data);
 
       setData(response.data.timeData);
@@ -80,16 +33,16 @@ const SyscallChartComponent: React.FC = () => {
 
   return (
     <div className={styles.chartContainer}>
-      <button className={styles.button} onClick={fetchDataFork} disabled={loading}>
+      <button className={styles.button} onClick={() => fetchData("fork")} disabled={loading}>
         {loading ? "Carregando..." : "Realizar Processo Fork"}
       </button>
-      <button className={styles.button} onClick={fetchDataGetpid} disabled={loading}>
+      <button className={styles.button} onClick={() => fetchData("getpid")} disabled={loading}>
         {loading ? "Carregando..." : "Realizar Processo GetPid"}
       </button>
-      <button className={styles.button} onClick={fetchDataGetppid} disabled={loading}>
+      <button className={styles.button} onClick={() => fetchData("getppid")} disabled={loading}>
         {loading ? "Carregando..." : "Realizar Processo GetPPid"}
       </button>
-      <button className={styles.button} onClick={fetchDataWait} disabled={loading}>
+      <button className={styles.button} onClick={() => fetchData("wait")} disabled={loading}>
         {loading ? "Carregando..." : "Realizar Processo Wait"}
       </button>
 
@@ -126,26 +79,23 @@ const SyscallChartComponent: React.FC = () => {
         </div>
       )}
       <div className={styles.codes}>
-      {sourceCode && (
-        <div className={styles.codeContainer}>
-          <h3>Source Code</h3>
-          <pre className={styles.codeBlock}>
-            <code>{sourceCode}</code>
-          </pre>
-        </div>
-      )}
-      {straceData && (
-        <div className={styles.straceContainer}>
-          <h3>Strace Data</h3>
-          <pre className={styles.codeBlock}>
-            <code>{straceData}</code>
-          </pre>
-        </div>
-      )}
+        {sourceCode && (
+          <div className={styles.codeContainer}>
+            <h3>Source Code</h3>
+            <pre className={styles.codeBlock}>
+              <code>{sourceCode}</code>
+            </pre>
+          </div>
+        )}
+        {straceData && (
+          <div className={styles.straceContainer}>
+            <h3>Strace Data</h3>
+            <pre className={styles.codeBlock}>
+              <code>{straceData}</code>
+            </pre>
+          </div>
+        )}
       </div>
-      
-
-      
     </div>
   );
 };

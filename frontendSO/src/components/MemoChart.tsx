@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import styles from "../styles/Charts.module.css";
 
-const MemoChartComponente: React.FC = () => {
+const MemoChartComponent: React.FC = () => {
   const [data, setData] = useState<Record<string, number> | null>(null);
   const [sourceCode, setSourceCode] = useState<string | null>(null);
   const [straceData, setStraceData] = useState<string | null>(null);
-
   const [loading, setLoading] = useState(false);
 
   const formatNumber = (num: number) => {
@@ -16,43 +15,11 @@ const MemoChartComponente: React.FC = () => {
     return num.toString();
   };
 
-  const fetchDataMmap = async () => {
+  const fetchData = async (endpoint: string) => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/systemcalls/memory/mmap");
+      const response = await axios.get(`http://localhost:5000/systemcalls/memory/${endpoint}`);
       console.log("Dados recebidos:", response.data);
-
-      setData(response.data.timeData);
-      setSourceCode(response.data.sourceCode);
-      setStraceData(response.data.straceData);
-    } catch (error) {
-      console.error("Erro ao buscar os dados:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  const fetchDataMunmap = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get("http://localhost:5000/systemcalls/memory/munmap");
-      console.log("Dados recebidos:", response.data);
-
-      setData(response.data.timeData);
-      setSourceCode(response.data.sourceCode);
-      setStraceData(response.data.straceData);
-    } catch (error) {
-      console.error("Erro ao buscar os dados:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchDataMprotect = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get("http://localhost:5000/systemcalls/memory/mprotect");
-      console.log("Dados recebidos:", response.data);
-
       setData(response.data.timeData);
       setSourceCode(response.data.sourceCode);
       setStraceData(response.data.straceData);
@@ -65,16 +32,12 @@ const MemoChartComponente: React.FC = () => {
 
   return (
     <div className={styles.chartContainer}>
-      <button className={styles.button} onClick={fetchDataMmap} disabled={loading}>
-        {loading ? "Carregando..." : "Realizar Processos Mmap"}
-      </button>
-      <button className={styles.button} onClick={fetchDataMunmap} disabled={loading}>
-        {loading ? "Carregando..." : "Realizar Processos Munmap"}
-      </button>
-      <button className={styles.button} onClick={fetchDataMprotect} disabled={loading}>
-        {loading ? "Carregando..." : "Realizar Processo Mprotect"}
-      </button>
-    
+      {['mmap', 'munmap', 'mprotect'].map((syscall) => (
+        <button key={syscall} className={styles.button} onClick={() => fetchData(syscall)} disabled={loading}>
+          {loading ? "Carregando..." : `Realizar Processo ${syscall.toUpperCase()}`}
+        </button>
+      ))}
+      
       {data && (
         <div className={styles.tablesContainer}>
           <table className={styles.table}>
@@ -91,15 +54,12 @@ const MemoChartComponente: React.FC = () => {
               {(() => {
                 const entries = Object.entries(data);
                 const meio = Math.ceil(entries.length / 2);
-                const firstHalf = entries.slice(0, meio);
-                const secondHalf = entries.slice(meio);
-
-                return firstHalf.map(([key1, value1], index) => (
+                return entries.slice(0, meio).map(([key1, value1], index) => (
                   <tr key={index}>
                     <td>{key1}</td>
                     <td>{formatNumber(value1)}</td>
-                    <td>{secondHalf[index]?.[0] || ""}</td>
-                    <td>{secondHalf[index] ? formatNumber(secondHalf[index][1]) : ""}</td>
+                    <td>{entries[meio + index]?.[0] || ""}</td>
+                    <td>{entries[meio + index] ? formatNumber(entries[meio + index][1]) : ""}</td>
                   </tr>
                 ));
               })()}
@@ -107,29 +67,23 @@ const MemoChartComponente: React.FC = () => {
           </table>
         </div>
       )}
+      
       <div className={styles.codes}>
-      {sourceCode && (
-        <div className={styles.codeContainer}>
-          <h3>Source Code</h3>
-          <pre className={styles.codeBlock}>
-            <code>{sourceCode}</code>
-          </pre>
-        </div>
-      )}
-      {straceData && (
-        <div className={styles.straceContainer}>
-          <h3>Strace Data</h3>
-          <pre className={styles.codeBlock}>
-            <code>{straceData}</code>
-          </pre>
-        </div>
-      )}
+        {sourceCode && (
+          <div className={styles.codeContainer}>
+            <h3>Source Code</h3>
+            <pre className={styles.codeBlock}><code>{sourceCode}</code></pre>
+          </div>
+        )}
+        {straceData && (
+          <div className={styles.straceContainer}>
+            <h3>Strace Data</h3>
+            <pre className={styles.codeBlock}><code>{straceData}</code></pre>
+          </div>
+        )}
       </div>
-      
-
-      
     </div>
   );
 };
 
-export default MemoChartComponente;
+export default MemoChartComponent;
