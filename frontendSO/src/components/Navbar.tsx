@@ -10,6 +10,7 @@ const Navbar = () => {
                     <li className={styles.navItem}><Link className={styles.navLink} to="/syscall">System Calls</Link></li>
                     <li className={styles.navItem}><Link className={styles.navLink} to="/memo">Memory</Link></li>
                     <li className={styles.navItem}><Link className={styles.navLink} to="/es">E/S</Link></li>
+                    <li className={styles.navItem}><Link className={styles.navLink} to="/cpu">CPU BOUND | IO</Link></li>
                 </ul>
             </nav>
         </header>

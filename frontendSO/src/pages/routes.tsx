@@ -4,6 +4,7 @@ import Entradaesaida from "./entradasaida";
 import Layout from "../layout/layout";
 import Syscall from "./syscall";
 import Memo from "./memo";
+import CPU from "./cpu";
 
 const AppRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const AppRoutes = () => {
         <Route path="syscall" element={<Syscall/>} />
         <Route path="memo" element={<Memo/>} />
         <Route path="es" element={<Entradaesaida />} />
+        <Route path="cpu" element={<CPU />} />
       </Route>
     </Routes>
   );
