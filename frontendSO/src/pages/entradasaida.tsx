@@ -4,7 +4,7 @@ import ESChartComponente from "../components/ESChart";
 const Entradaesaida = () => {
     return (
         <div className={styles.container}>
-            <h1>System Calls Page</h1>
+            <h1>Entrada e Saida</h1>
             
             <div className={styles.esContainer}>
                 <div className={styles.esList}>

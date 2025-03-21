@@ -4,7 +4,7 @@ import MemoChartComponente from '../components/MemoChart';
 const Memo = () =>{
     return (
         <div className={styles.container}>
-            <h1>System Calls Page</h1>
+            <h1>Memória</h1>
             
             <div className={styles.memoContainer}>
                 <div className={styles.memoList}>

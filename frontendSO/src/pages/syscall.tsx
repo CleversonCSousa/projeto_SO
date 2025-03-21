@@ -4,7 +4,7 @@ import SyscallChartComponent from '../components/SysCallChart';
 const Syscall = () => {
     return (
         <div className={styles.container}>
-            <h1>System Calls Page</h1>
+            <h1>System Calls</h1>
             
             <div className={styles.syscallContainer}>
                 <div className={styles.syscallList}>

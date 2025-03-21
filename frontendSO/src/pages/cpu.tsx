@@ -4,7 +4,7 @@ import CPUChartComponente from "../components/CPUChart";
 const CPU = () => {
     return (
         <div className={styles.container}>
-            <h1>System Calls Page</h1>
+            <h1>CPU BOUND e IO</h1>
             
             <div className={styles.esContainer}>
                 <div className={styles.esList}>
