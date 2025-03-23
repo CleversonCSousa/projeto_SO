@@ -3,7 +3,7 @@ const fs = require("fs");
 function getSourceCode(path) {
   return new Promise((resolve, reject) => {
     fs.readFile(
-      `../SO/${path}`,
+      `./SO/${path}`,
       {
         encoding: "utf8",
       },

@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  server:
+    build: ./server
+    restart: on-failure
+    ports:
+      - 5000:5000
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+      - logs:/app/logs
+  front:
+    build: ./frontendSO
+    restart: on-failure
+    ports:
+      - 5173:5173
+    volumes:
+      - ./frontendSO:/app
+      - /app/node_modules
+      - logs:/app/logs
+
+volumes:
+  logs:

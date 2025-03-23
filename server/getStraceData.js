@@ -4,7 +4,7 @@ const path = require("path");
 function getStraceData(programPath) {
   return new Promise((resolve, reject) => {
     exec(
-      `cd ../SO/${programPath} && strace ./index`,
+      `cd ./SO/${programPath} && strace ./index`,
       {
         maxBuffer: 1024 * 1024 * 100,
       },
