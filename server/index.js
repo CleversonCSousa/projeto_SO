@@ -7,7 +7,7 @@ const getStraceData = require("./getStraceData");
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: "http://localhost:7172" }));
 
 app.get("/systemcalls/io_files/stat", async (req, res) => {
   try {
