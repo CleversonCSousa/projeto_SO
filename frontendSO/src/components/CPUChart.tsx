@@ -18,7 +18,7 @@ const CPUChartComponente: React.FC = () => {
   const fetchData = async (endpoint: string) => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:5000/${endpoint}`);
+      const response = await axios.get(`http://${window.location.hostname}:7272/${endpoint}`);
       console.log("Dados recebidos:", response.data);
 
       setData(response.data.timeData);

@@ -16,7 +16,7 @@ const ChartComponent: React.FC = () => {
   const fetchData = async () => {
     setLoading(true); // Show loading state
     try {
-      const response = await axios.get("http://localhost:5000/data");
+      const response = await axios.get(`http://${window.location.hostname}:7272/data`);
       console.log("Dados recebidos:", response.data);
 
       const dataObject = Array.isArray(response.data) ? response.data[0] : response.data;

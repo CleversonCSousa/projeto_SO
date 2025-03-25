@@ -18,7 +18,7 @@ const MemoChartComponent: React.FC = () => {
   const fetchData = async (endpoint: string) => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:5000/systemcalls/memory/${endpoint}`);
+      const response = await axios.get(`http://${window.location.hostname}:7272/systemcalls/memory/${endpoint}`);
       console.log("Dados recebidos:", response.data);
       setData(response.data.timeData);
       setSourceCode(response.data.sourceCode);
