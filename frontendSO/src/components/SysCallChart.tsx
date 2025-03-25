@@ -18,7 +18,7 @@ const SyscallChartComponent: React.FC = () => {
   const fetchData = async (endpoint: string) => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://${window.location.hostname}:5000/systemcalls/processes/${endpoint}`);
+      const response = await axios.get(`http://${window.location.hostname}:5052/systemcalls/processes/${endpoint}`);
       console.log("Dados recebidos:", response.data);
       setData(response.data.timeData);
       setSourceCode(response.data.sourceCode);

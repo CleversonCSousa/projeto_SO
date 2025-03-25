@@ -4,7 +4,7 @@ services:
     build: ./server
     restart: on-failure
     ports:
-      - 5000:5000
+      - 5052:5052
     volumes:
       - ./server:/app
       - /app/node_modules

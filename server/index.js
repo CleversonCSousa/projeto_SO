@@ -247,5 +247,5 @@ app.get("/io_bound", async (req, res) => {
   }
 });
 
-const PORT = 5000;
+const PORT = 5052;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
