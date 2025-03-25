@@ -7,7 +7,7 @@ const getStraceData = require("./getStraceData");
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:7172" }));
+app.use(cors({ origin: "*" }));
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
