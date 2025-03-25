@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 7172,
-    allowedHosts: "all",
+    allowedHosts: ["all", "andromeda.lasdpc.icmc.usp.br"],
     proxy: {
       "/data": {
         target: "http://localhost:5000",
