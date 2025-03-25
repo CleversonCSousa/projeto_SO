@@ -9,6 +9,10 @@ const app = express();
 
 app.use(cors({ origin: "http://localhost:7172" }));
 
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
 app.get("/systemcalls/io_files/stat", async (req, res) => {
   try {
     const timeData = await getTimeData("systemcalls/io_files/stat");
